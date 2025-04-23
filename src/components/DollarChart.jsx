@@ -5,12 +5,9 @@ import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
 
-// Activa el módulo de exportación
-
 
 const DollarChart = () => {
-  const { data } = useSelector((state) => state.dollar);
-
+  const { data, loading } = useSelector((state) => state.dollar);
   const chartData = useMemo(() => {
     return data.map((item) => [
       new Date(item.fecha).getTime(),
@@ -52,13 +49,15 @@ const DollarChart = () => {
       },
     ],
   };
-
+  if (loading) return ;
   return (
       <div>
         <Typography variant="h3" gutterBottom  align="start"   sx={{ mt: 6 }} >
             Valores del dólar 
         </Typography>
-                <Box
+               {loading ? (
+                             <CircularProgress />
+                           ) : ( <Box
                 display="flex"
                 gap={2}
                 alignItems="center"
@@ -79,7 +78,8 @@ const DollarChart = () => {
                     constructorType="stockChart"
                     options={options}
                 />
-                </Box>
+          </Box>
+                  )}
     </div>
   );
 };

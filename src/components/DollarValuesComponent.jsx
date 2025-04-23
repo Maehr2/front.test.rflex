@@ -69,9 +69,7 @@ const DollarValuesComponent = () => {
   setSelectedFecha(null);
   };
   
-  // const handleDelete = (fecha) => {
-  //   dispatch(deleteDollar(fecha));
-  // };
+ 
 
   if (loading) return <p>Cargando...</p>;
 
@@ -202,7 +200,6 @@ const DollarValuesComponent = () => {
                             color="error"
                             sx={{ ml: 5 }} 
                             onClick={() => confirmDelete(item.fecha)}
-                            // onClick={() => handleDelete(item.fecha)}
                           >
                             Eliminar
                           </Button>

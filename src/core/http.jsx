@@ -11,7 +11,7 @@ const http = axios.create({
 });
 
 http.interceptors.request.use(config => {
-  console.log(`🔄 [${config.method?.toUpperCase()}] ${config.url}`);
+  console.log(`[${config.method?.toUpperCase()}] ${config.url}`);
   return config;
 });
 
