@@ -1,15 +1,20 @@
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
+import Exporting from 'highcharts/modules/exporting';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
+import { Box, Typography } from '@mui/material';
+
+// Activa el módulo de exportación
+
 
 const DollarChart = () => {
   const { data } = useSelector((state) => state.dollar);
 
   const chartData = useMemo(() => {
     return data.map((item) => [
-      new Date(item.fecha).getTime(), // x = timestamp
-      parseFloat(item.valor),         // y = valor
+      new Date(item.fecha).getTime(),
+      parseFloat(item.valor),
     ]);
   }, [data]);
 
@@ -20,6 +25,9 @@ const DollarChart = () => {
     rangeSelector: {
       selected: 1,
     },
+    exporting: {
+      enabled: true,
+    },
     series: [
       {
         name: 'USD',
@@ -28,17 +36,50 @@ const DollarChart = () => {
           valueDecimals: 2,
         },
         type: 'line',
+        lastPrice: {
+          enabled: true,
+          color: 'transparent',
+          label: {
+            enabled: true,
+            backgroundColor: '#ffffff',
+            borderColor: '#2caffe',
+            borderWidth: 1,
+            style: {
+              color: '#000000',
+            },
+          },
+        },
       },
     ],
   };
 
   return (
-    <div>
-      <HighchartsReact
-        highcharts={Highcharts}
-        constructorType={'stockChart'}
-        options={options}
-      />
+      <div>
+        <Typography variant="h3" gutterBottom  align="start"   sx={{ mt: 6 }} >
+            Valores del dólar 
+        </Typography>
+                <Box
+                display="flex"
+                gap={2}
+                alignItems="center"
+                mb={2}
+                sx={{
+                    maxWidth: 700,
+                    height: 435,
+                    mt: 6,
+                    p: 2,
+                    borderRadius: 2,
+                    boxShadow: 3,
+                    bgcolor: '#f9f9f9',
+                }}
+                    >
+                        
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    constructorType="stockChart"
+                    options={options}
+                />
+                </Box>
     </div>
   );
 };
